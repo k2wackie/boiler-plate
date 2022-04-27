@@ -24,6 +24,10 @@ mongoose
 
 app.get("/", (req, res) => res.send("h"));
 
+app.get("/api/hello", (req, res) => {
+  res.send("HI!!");
+});
+
 app.post("/api/user/register", (req, res) => {
   const user = new User(req.body);
 
