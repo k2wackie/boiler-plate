@@ -47,7 +47,7 @@ app.post("/api/user/login", (req, res) => {
         });
       user.generateToken((err, user) => {
         if (err) return res.status(400).send(err);
-        res
+        return res
           .cookie("x_auth", user.token)
           .status(200)
           .json({ loginSuccess: true, userID: user._id });
@@ -59,7 +59,7 @@ app.post("/api/user/login", (req, res) => {
 app.get("/api/user/logout", auth, (req, res) => {
   User.findOneAndUpdate({ _id: req.user._id }, { token: "" }, (err, user) => {
     if (err) return res.json({ success: false, err });
-    return res.status(200).send({
+    return res.status(200).cookie("x_auth", user.token, { maxAge: 0 }).send({
       success: true,
     });
   });

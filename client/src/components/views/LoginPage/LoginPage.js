@@ -30,7 +30,7 @@ function LoginPage() {
       if (res.payload.loginSuccess) {
         navigate("/");
       } else {
-        alert("Error");
+        alert(res.payload.message);
       }
     });
   };
