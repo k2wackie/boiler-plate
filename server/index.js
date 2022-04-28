@@ -56,6 +56,15 @@ app.post("/api/user/login", (req, res) => {
   });
 });
 
+app.get("/api/user/logout", auth, (req, res) => {
+  User.findOneAndUpdate({ _id: req.user._id }, { token: "" }, (err, user) => {
+    if (err) return res.json({ success: false, err });
+    return res.status(200).send({
+      success: true,
+    });
+  });
+});
+
 // role 0 -> 일반유저,  role 1 -> 관리자
 app.get("/api/user/auth", auth, (req, res) => {
   res.status(200).json({
@@ -67,15 +76,6 @@ app.get("/api/user/auth", auth, (req, res) => {
     lastname: req.user.lastname,
     role: req.user.role,
     image: req.user.image,
-  });
-});
-
-app.get("/api/user/logout", auth, (req, res) => {
-  User.findOneAndUpdate({ _id: req.user._id }, { token: "" }, (err, user) => {
-    if (err) return res.json({ success: false, err });
-    return res.status(200).send({
-      success: true,
-    });
   });
 });
 
